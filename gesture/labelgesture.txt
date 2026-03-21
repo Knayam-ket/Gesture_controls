@@ -1,0 +1,7 @@
+0 : thumbs up,
+1 : peace sign,
+2 : middlefinger,
+3 : one,
+4 : Three,
+5 : four,
+6 : cool
