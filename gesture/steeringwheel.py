@@ -2,20 +2,16 @@ import socket
 import json
 import pydirectinput
 
-# --- CONFIGURATION ---
 UDP_IP = "0.0.0.0"
 UDP_PORT = 8080
 STEER_THRESHOLD = 3.0  
 GAS_THRESHOLD = 3.0    
 
-# Setup Socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sock.bind((UDP_IP, UDP_PORT))
 
-# --- THE FIX: Add a 0.5 second timeout ---
 sock.settimeout(0.5)
 
-print("Racing Controller Started! Waiting for Accelerometer data...")
 
 current_keys = {
     'w': False,
@@ -35,7 +31,6 @@ def update_key(key, should_be_pressed):
         current_keys[key] = False
         print(f"Released: {key.upper()}")
 
-# --- THE FIX: Emergency brake function ---
 def release_all_keys():
     """Forces all held keys to release if the phone disconnects."""
     for key in current_keys:
@@ -53,16 +48,13 @@ while True:
         if "values" in sen_data:
             x, y, z = sen_data["values"]
             
-            # Steering (Roll / Y-Axis)
             update_key('a', y < -STEER_THRESHOLD)
             update_key('d', y > STEER_THRESHOLD)
             
-            # Gas & Brake (Pitch / X-Axis)
             update_key('w', x < -GAS_THRESHOLD)
             update_key('s', x > GAS_THRESHOLD)
 
     except socket.timeout:
-        # If no data arrives for 0.5 seconds, let go of the keyboard!
         release_all_keys()
     except json.JSONDecodeError:
         pass
