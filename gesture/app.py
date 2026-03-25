@@ -15,7 +15,7 @@ if not os.path.exists(model_path):
     urllib.request.urlretrieve(url, model_path)
     print("Download complete!")
 
-currentgesturelabel = 6
+currentgesturelabel = 7
 csv_file = 'gesture_dataset.csv'
 
 if not os.path.exists(csv_file):

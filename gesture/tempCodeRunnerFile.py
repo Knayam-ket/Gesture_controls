@@ -4,8 +4,8 @@ import pydirectinput
 
 UDP_IP = "0.0.0.0"
 UDP_PORT = 8080
-STEER_THRESHOLD = 2.0  
-GAS_THRESHOLD = 2.0
+STEER_THRESHOLD = 3.0  
+GAS_THRESHOLD = 3.0    
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sock.bind((UDP_IP, UDP_PORT))
@@ -17,8 +17,7 @@ current_keys = {
     'w': False,
     's': False,
     'a': False,
-    'd': False,
-    'space' : False
+    'd': False
 }
 
 def update_key(key, should_be_pressed):
@@ -51,9 +50,9 @@ while True:
             
             update_key('a', y < -STEER_THRESHOLD)
             update_key('d', y > STEER_THRESHOLD)
+            
             update_key('w', x < -GAS_THRESHOLD)
             update_key('s', x > GAS_THRESHOLD)
-            update_key('space', z > 11.0)
 
     except socket.timeout:
         release_all_keys()

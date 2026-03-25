@@ -5,3 +5,4 @@
 4 : Three,
 5 : four,
 6 : cool
+7 : kill
